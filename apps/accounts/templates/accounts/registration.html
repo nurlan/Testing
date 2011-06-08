@@ -1,0 +1,13 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+	<h3>{{ title }}</h3>
+	<table>
+		<form action="{% url register %}" method="post">{% csrf_token %}
+			{{ form.as_table }}
+			<input type="submit" value="Sign UP"/> 
+		</form>
+	</table>
+{% endblock %}
