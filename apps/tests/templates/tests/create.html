@@ -1,0 +1,15 @@
+{% extends "tests/base.html" %}
+
+{% block title %}Create a new Test{% endblock %}
+
+{% block content %}
+	<div>
+		<h3>A new test</h3>
+		<form action="{% url create %}" method="post">{% csrf_token %}
+			<table>
+				{{ form.as_table }}
+			</table>
+			<input type="submit" value="Create" />
+		</form>
+	</div>
+{% endblock %}

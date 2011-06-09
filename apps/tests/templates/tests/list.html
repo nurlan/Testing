@@ -18,10 +18,11 @@
 </div>
 
 	<h3>{{ title }}</h3>
+	<div><a style="float: right;" href="{% url create %}">+create</a></div>
 	<div>
 		<ul>
 			{% for i in tests %}
-				<li><strong>{{ i.name }}</strong> by <i>{{ i.author }}</i></li>
+				<li><a href="{% url view i.id %}"><strong>{{ i.name }}</strong> by <i>{{ i.author }}</i></a></li>
 			{% endfor %}
 		</ul>
 	</div>

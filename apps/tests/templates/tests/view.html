@@ -1,0 +1,16 @@
+{% extends "tests/base.html" %}
+
+{% block title %}{{ test.name }}{% endblock %}
+
+{% block content %}
+<div>
+	<h3>{{ test.name }}</h3>
+	<div style="padding-left: 20px;">{{ test.description }}</div>
+	<div style="float: right;">by <i>{{ test.author }}</i></div>
+	
+	<br>
+	<a href="{% url edit test.id %}">edit</a><br>
+	<a href="{% url remove test.id %}">remove</a><br>
+	<a href="{% url list %}">&lt;&lt; back</a>
+</div>
+{% endblock %}

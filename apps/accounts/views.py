@@ -15,7 +15,7 @@ def login(request):
             user = authenticate(username = cd.get('username'),password=cd.get('password'))
             if user:
                 _login(request,user)
-                next=request.REQUEST.get('next','/index/')
+                next=request.REQUEST.get('next','/tests/')
                 return HttpResponseRedirect(next)
             else:
                 return HttpResponseRedirect(reverse('login'))
