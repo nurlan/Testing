@@ -3,22 +3,13 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<div>
-	Hello,
-	{% if user.is_authenticated %}
-		{{ user.first_name }}
-	{% else %}
-		Guest
-	{% endif %}!<br>
-	{% if user.is_authenticated %}
-		<a href="{% url logout %}">logout</a>
-	{% else %}
-		<a href="{% url login %}">login</a>
-	{% endif %}
-</div>
-
-	<h3>{{ title }}</h3>
-	<div><a style="float: right;" href="{% url create %}">+create</a></div>
+	<h2 class="art-postheader">{{ title }}</h2>
+	
+	<div class="art-vmenublockheader" style="float: right;">
+       <div class="l"></div>
+       <div class="r"></div>
+       <h3 class="t"><a href="{% url create %}">+create</a></h3>
+    </div>
 	<div>
 		<ul>
 			{% for i in tests %}

@@ -8,6 +8,7 @@ class Question(models.Model):
     text = models.TextField('text')
     created_date = models.DateField('created date',auto_now_add=True)
     modified_date = models.DateField('modified date',auto_now=True)
+    answers = models.CharField('answers', blank=True, max_length=100)
     
     def __unicode__(self):
         return self.text

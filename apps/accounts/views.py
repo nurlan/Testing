@@ -26,7 +26,7 @@ def login(request):
     
 def logout(request):
     _logout(request)
-    return HttpResponseRedirect(reverse('login'))
+    return HttpResponseRedirect(reverse('list'))
     
 def register(request):
     if request.method == 'POST':
