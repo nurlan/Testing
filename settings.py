@@ -1,3 +1,4 @@
+# coding: utf-8
 # Django settings for Testing project.
 import os
 
@@ -60,7 +61,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = rel_path('static')
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -69,11 +70,12 @@ STATIC_URL = '/static/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-#    rel_path('static'),
+    rel_path('static'),
+#    STATIC_URL,
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -84,11 +86,20 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'y7%)-j)azq&l@8@fyw*8q-bj=!mpp@w8$7bzcssagx+(6iq8r@'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+     'django.contrib.auth.context_processors.auth',
+     'django.core.context_processors.debug',
+     'django.core.context_processors.media',
+     'django.core.context_processors.static',
+     'django.core.context_processors.request',
+#     "django.core.context_processors.auth",
+)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -101,6 +112,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+#    'django.middleware.csrf.CsrfResponseMiddleware',
+#    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
@@ -125,6 +138,7 @@ INSTALLED_APPS = (
     'apps.tests',
     'apps.questions',
     'apps.accounts',
+    'south',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

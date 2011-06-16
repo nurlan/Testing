@@ -1,8 +1,18 @@
 {% extends "tests/base.html" %}
+{% load mptt_tags %}
 
 {% block title %}{{ test.name }}{% endblock %}
 
 {% block content %}
+<script>
+	$(function(){
+		$('.comment').hide();
+	});
+	
+	function show_form(formid) {
+		$('#comment'+formid).show();
+	}
+</script>
 <div>
 	<h3>{{ test.name }}</h3>
 	<div style="padding-left: 20px;">{{ test.description }}</div>
@@ -12,5 +22,44 @@
 	<a href="{% url edit test.id %}">edit</a><br>
 	<a href="{% url remove test.id %}">remove</a><br>
 	<a href="{% url list %}">&lt;&lt; back</a>
+</div>
+<hr>
+<div>
+	{% recursetree comments %}
+    <div style="margin-left: {{ node.get_level }}0px">
+
+        {# comment #}
+        <b>Author:</b> {{ node.author }}<br />
+        <b>Comment:</b><br />
+        {{ node.comment|linebreaks }}
+
+        {# form to reply to this comment #}
+        <div>
+	        <div class="comment" id="comment{{ node.id }}">
+		        <form action="{% url view test.id %}" method="post">{% csrf_token %}
+		<!--             <input type="text" value="" name="author"> -->
+		            <textarea name="comment"></textarea>
+		            <input type="hidden" name="parent_id" value="{{ node.id}}"> {# <-- parent id goes here #}
+		            <input type="submit" value="Reply">
+		        </form>
+			</div>
+			<input type="button" style="float: right;" name="reply_button" value="Show" onclick="show_form({{ node.id }})"/>
+		</div>
+		<br><br>
+    </div>
+    {# recursion! children of a given comment #}
+    {% if not node.is_leaf_node %}
+        {{ children }}
+    {% endif %}
+{% endrecursetree %}
+</div>
+<hr>
+<div>
+	<form action="{% url view test.id %}" method="post">{% csrf_token %}
+<!--          <input type="text" value="" name="author"> -->
+         <textarea name="comment"></textarea>
+         <input type="hidden" name="parent_id" value=""> {# <-- parent id goes here #}
+         <input type="submit" value="Add comment">
+     </form>
 </div>
 {% endblock %}

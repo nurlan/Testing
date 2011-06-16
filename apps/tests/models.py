@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import datetime
+
 class Test(models.Model):
     
     STATUS_TYPES = (
@@ -17,3 +19,19 @@ class Test(models.Model):
     
     def __unicode__(self):
         return self.name
+
+
+from apps.mptt.models import MPTTModel, TreeForeignKey
+
+class Comment(MPTTModel):
+    """ Threaded comments for blog posts """
+    test = models.ForeignKey(Test, related_name='comment_test')
+    author = models.CharField(max_length=60)
+    comment = models.TextField()
+    added  = models.DateTimeField(default=datetime.datetime.now())
+    # a link to comment that is being replied, if one exists
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+
+    class MPTTMeta:
+        # comments on one level will be ordered by date of creation
+        order_insertion_by=['added']
