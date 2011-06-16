@@ -138,7 +138,8 @@ INSTALLED_APPS = (
     'apps.tests',
     'apps.questions',
     'apps.accounts',
-    'south',
+    'apps.mptt',
+#    'south',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
